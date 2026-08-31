@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Life Manager</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         .gradient-bg {
@@ -15,12 +17,11 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .hidden {
-            display: none !important;
-        }
     </style>
 </head>
 <body class="gradient-bg min-h-screen text-slate-100 font-sans flex flex-col justify-between">
+
+    <!-- Header Section -->
     <header class="p-6 text-center border-b border-slate-800 flex justify-between items-center px-8">
         <div class="flex items-center space-x-3">
             <div class="p-2 bg-indigo-600 rounded-lg">
@@ -31,8 +32,9 @@
             </h1>
         </div>
 
-        <div id="user-section" class="hidden items-center space-x-4">
-            <img id="user-photo" src="" alt="User Photo" class="w-10 h-10 rounded-full border-2 border-indigo-500 object-cover">
+        <!-- Auth Actions (Shows Profile when logged in) -->
+        <div id="user-section" class="hidden flex items-center space-x-4">
+            <img id="user-photo" src="" alt="User Photo" class="w-10 h-10 rounded-full border-2 border-indigo-500">
             <span id="user-name" class="font-medium text-slate-300"></span>
             <button id="btn-logout" class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-4 py-2 rounded-lg text-sm transition-all flex items-center space-x-2">
                 <i data-lucide="log-out" class="w-4 h-4"></i>
@@ -41,7 +43,10 @@
         </div>
     </header>
 
+    <!-- Main Content Area -->
     <main class="flex-grow flex items-center justify-center p-6">
+        
+        <!-- Login Card (Visible when logged out) -->
         <div id="login-card" class="glass-card max-w-md w-full p-8 rounded-2xl shadow-2xl text-center space-y-6">
             <div class="space-y-2">
                 <h2 class="text-3xl font-extrabold tracking-tight text-white">স্বাগতম!</h2>
@@ -49,7 +54,7 @@
             </div>
 
             <button id="btn-login" class="w-full bg-white hover:bg-slate-100 text-slate-900 font-semibold py-3 px-6 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center justify-center space-x-3 border border-slate-200">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
+                <svg class="w-5 h-5" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
@@ -59,6 +64,7 @@
             </button>
         </div>
 
+        <!-- Dashboard View (Visible when logged in) -->
         <div id="dashboard-card" class="hidden glass-card max-w-2xl w-full p-8 rounded-2xl shadow-2xl space-y-6">
             <h2 class="text-2xl font-bold text-slate-100 flex items-center space-x-2">
                 <i data-lucide="layout-dashboard" class="w-6 h-6 text-indigo-400"></i>
@@ -69,31 +75,42 @@
                 🚀 আপনার AI Life Manager অ্যাপ তৈরি হচ্ছে... পরবর্তী ফিচারগুলো খুব শীঘ্রই যোগ করা হবে!
             </div>
         </div>
+
     </main>
 
+    <!-- Footer -->
     <footer class="p-4 text-center text-slate-500 text-xs border-t border-slate-800">
         &copy; 2026 AI Life Manager. All rights reserved.
     </footer>
 
+    <!-- Firebase Script Section -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import {
-            getAuth,
-            signInWithPopup,
-            GoogleAuthProvider,
-            signOut,
-            onAuthStateChanged
+        import { 
+            getAuth, 
+            signInWithRedirect, 
+            GoogleAuthProvider, 
+            signOut, 
+            onAuthStateChanged 
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
+        // Verified Firebase Config
         const firebaseConfig = {
-            apiKey: "AIzaSyD-YOUR_ACTUAL_API_KEY_HERE",
-            authDomain: "life-manager-app-471d8.firebaseapp.com",
-            projectId: "life-manager-app-471d8",
-            storageBucket: "life-manager-app-471d8.firebasestorage.app",
-            messagingSenderId: "64873524692",
-            appId: "1:64873524692:web:Your_App_ID_Here"
+          apiKey: "AIzaSyDe_OU6xzh6ut_dBPvvlrVr5CMeNaywrCc",
+          authDomain: "life-manager-app-471d8.firebaseapp.com",
+          projectId: "life-manager-app-471d8",
+          storageBucket: "life-manager-app-471d8.firebasestorage.app",
+          messagingSenderId: "64873524692",
+          appId: "1:64873524692:web:b369064b0fb8ed41953a41",
+          measurementId: "G-19HD2EPHRB"
         };
 
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // UI Elements
         const loginCard = document.getElementById('login-card');
         const dashboardCard = document.getElementById('dashboard-card');
         const loginBtn = document.getElementById('btn-login');
@@ -102,92 +119,44 @@
         const userName = document.getElementById('user-name');
         const userPhoto = document.getElementById('user-photo');
 
-        let auth = null;
-        let provider = null;
-        let firebaseReady = false;
-
-        const isDemoMode = () => {
-            return firebaseConfig.apiKey.includes('YOUR_ACTUAL_API_KEY') ||
-                firebaseConfig.appId.includes('Your_App_ID') ||
-                firebaseConfig.apiKey.length < 20;
-        };
-
-        const updateAuthUi = (user) => {
-            if (user) {
-                loginCard.classList.add('hidden');
-                dashboardCard.classList.remove('hidden');
-                userSection.classList.remove('hidden');
-                userSection.classList.add('flex');
-
-                userName.textContent = user.displayName || user.email || 'AI User';
-                userPhoto.src = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || user.email || 'AI User') + '&background=4f46e5&color=fff';
-            } else {
-                loginCard.classList.remove('hidden');
-                dashboardCard.classList.add('hidden');
-                userSection.classList.add('hidden');
-                userSection.classList.remove('flex');
-            }
-        };
-
-        const handleDemoLogin = () => {
-            const demoUser = {
-                displayName: 'Demo User',
-                email: 'demo@life-manager.local',
-                photoURL: 'https://ui-avatars.com/api/?name=Demo+User&background=4f46e5&color=fff'
-            };
-            updateAuthUi(demoUser);
-        };
-
-        const handleSignIn = async () => {
-            if (isDemoMode()) {
-                handleDemoLogin();
-                return;
-            }
-
+        // Handle Sign In with Redirect
+        loginBtn.addEventListener('click', async () => {
             try {
-                const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                provider = new GoogleAuthProvider();
-                firebaseReady = true;
-                await signInWithPopup(auth, provider);
+                await signInWithRedirect(auth, provider);
             } catch (error) {
-                console.error('Login error:', error);
-                alert('Login failed: ' + (error.message || 'Unknown error'));
-            }
-        };
-
-        loginBtn.addEventListener('click', handleSignIn);
-
-        logoutBtn.addEventListener('click', async () => {
-            if (isDemoMode()) {
-                updateAuthUi(null);
-                return;
-            }
-
-            try {
-                if (auth) {
-                    await signOut(auth);
-                }
-            } catch (error) {
-                console.error('Logout error:', error);
+                console.error("Login error:", error);
+                alert("Login failed: " + error.message);
             }
         });
 
-        if (isDemoMode()) {
-            updateAuthUi(null);
-        } else {
+        // Handle Sign Out
+        logoutBtn.addEventListener('click', async () => {
             try {
-                const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                provider = new GoogleAuthProvider();
-                firebaseReady = true;
-                onAuthStateChanged(auth, (user) => updateAuthUi(user));
+                await signOut(auth);
             } catch (error) {
-                console.error('Firebase initialization failed:', error);
-                updateAuthUi(null);
+                console.error("Logout error:", error);
             }
-        }
+        });
 
+        // Auth State Observer
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in
+                loginCard.classList.add('hidden');
+                dashboardCard.classList.remove('hidden');
+                userSection.classList.remove('hidden');
+
+                userName.textContent = user.displayName || user.email;
+                userPhoto.src = user.photoURL || 'https://via.placeholder.com/40';
+            } else {
+                // User is signed out
+                loginCard.classList.remove('hidden');
+                dashboardCard.classList.add('hidden');
+                userSection.classList.add('hidden');
+            }
+        });
+
+        // Initialize Lucide Icons
         lucide.createIcons();
     </script>
 </body>
