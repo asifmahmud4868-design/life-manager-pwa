@@ -1,163 +1,448 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google" content="notranslate">
-    <title>AI Life Manager</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+<html lang="bn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Life Manager</title>
     <style>
-        .gradient-bg {
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
-        }
-        .glass-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+      :root {
+        --bg: #f4f7fb;
+        --panel: #ffffff;
+        --soft: #eef3f9;
+        --muted: #6e7a8a;
+        --text: #1d2530;
+        --line: #e5ebf2;
+        --primary: #6c5ce7;
+        --primary-2: #7c6ef0;
+        --green: #25b97a;
+        --red: #ff6b6b;
+        --shadow: 0 20px 44px rgba(43, 52, 74, 0.12);
+      }
+
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: linear-gradient(180deg, #eef3ff 0%, #f7f9fc 100%);
+        color: var(--text);
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 32px 20px;
+      }
+      .app {
+        width: min(1180px, 100%);
+        background: rgba(255,255,255,0.76);
+        border: 1px solid rgba(146,157,177,0.2);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+        overflow: hidden;
+      }
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 30px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255,255,255,0.28);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+      .logo {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--primary), #8b5cf6);
+        display: grid;
+        place-items: center;
+        color: white;
+        font-size: 1.2rem;
+        box-shadow: 0 8px 18px rgba(108, 92, 231, 0.28);
+      }
+      .topbar nav {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        color: var(--muted);
+        font-size: 0.96rem;
+      }
+      .nav-pill {
+        background: #f3f6fb;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 10px 16px;
+        font-weight: 600;
+      }
+      .nav-pill.primary {
+        background: linear-gradient(135deg, #7a68f5, #5e7ef0);
+        color: white;
+        border: none;
+        box-shadow: 0 14px 26px rgba(98, 92, 235, 0.3);
+      }
+      .main {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+      }
+      .content {
+        padding: 28px 30px 34px;
+      }
+      .hero {
+        background: linear-gradient(135deg, rgba(124,110,240,0.06), rgba(93,160,255,0.03));
+        border: 1px solid rgba(124,110,240,0.14);
+        border-radius: 22px;
+        padding: 26px 24px;
+      }
+      h1 {
+        margin: 0 0 14px;
+        font-size: clamp(2.1rem, 4vw, 4rem);
+        line-height: 1.05;
+        letter-spacing: -0.06em;
+      }
+      .hero p {
+        margin: 0;
+        max-width: 620px;
+        color: var(--muted);
+        font-size: 1.05rem;
+        line-height: 1.7;
+      }
+      .cta-row {
+        display: flex;
+        gap: 14px;
+        margin-top: 24px;
+        flex-wrap: wrap;
+      }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 50px;
+        padding: 0 20px;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: white;
+        font-weight: 700;
+        text-decoration: none;
+        color: var(--text);
+      }
+      .button.primary {
+        background: linear-gradient(135deg, var(--primary), #5d7cf0);
+        border: none;
+        color: white;
+        box-shadow: 0 16px 30px rgba(110, 96, 219, 0.25);
+      }
+      .meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 24px;
+      }
+      .stat {
+        flex: 1 1 150px;
+        padding: 18px 18px 16px;
+        background: rgba(255,255,255,0.84);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+      }
+      .stat strong {
+        display: block;
+        font-size: 1.5rem;
+        margin-bottom: 6px;
+      }
+      .stat span {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .card-stack {
+        padding: 28px 30px 34px 0;
+      }
+      .card {
+        background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(248,250,255,0.95));
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: 0 14px 28px rgba(33, 44, 66, 0.08);
+        padding: 18px;
+      }
+      .calendar {
+        margin-top: 12px;
+      }
+      .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+        font-weight: 700;
+        color: var(--text);
+      }
+      .month-nav {
+        display: flex;
+        gap: 10px;
+        color: var(--muted);
+      }
+      .month-nav span {
+        display: inline-flex;
+        width: 28px;
+        height: 28px;
+        border-radius: 10px;
+        background: var(--soft);
+        align-items: center;
+        justify-content: center;
+      }
+      .days, .dates {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .days {
+        margin-bottom: 10px;
+        color: var(--muted);
+        font-size: 0.75rem;
+        text-align: center;
+        font-weight: 700;
+      }
+      .date {
+        aspect-ratio: 1;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        color: var(--text);
+        background: #f7f9fc;
+        border: 1px solid transparent;
+      }
+      .date.muted {
+        opacity: 0.38;
+      }
+      .date.today {
+        background: linear-gradient(135deg, #6c5ce7, #5d7cf0);
+        color: white;
+        box-shadow: 0 10px 18px rgba(108, 92, 231, 0.28);
+      }
+      .date.task {
+        border-color: rgba(37,185,122,0.4);
+        background: rgba(37,185,122,0.08);
+        color: #1d7f5c;
+      }
+      .to-do {
+        margin-top: 18px;
+      }
+      .to-do .head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+      .pill {
+        background: rgba(108,92,231,0.09);
+        color: #5d4ce6;
+        border: 1px solid rgba(108,92,231,0.18);
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+      .task-list {
+        display: grid;
+        gap: 10px;
+      }
+      .task {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        background: #f8f9fd;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 12px 14px;
+      }
+      .check { width: 18px; height: 18px; border-radius: 8px; border: 2px solid rgba(108,92,231,0.6); }
+      .check.done { background: linear-gradient(135deg, #31c78d, #1fa96c); border-color: transparent; }
+      .task-main {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+      }
+      .task .text {
+        font-weight: 600;
+      }
+      .task .time {
+        font-size: 0.78rem;
+        color: var(--muted);
+      }
+      .task .tag {
+        font-size: 0.72rem;
+        border-radius: 999px;
+        padding: 6px 8px;
+        background: rgba(255,107,107,0.09);
+        color: #d24b4d;
+        border: 1px solid rgba(255,107,107,0.16);
+      }
+      .task.done .text { text-decoration: line-through; color: #8b94a5; }
+      @media (max-width: 900px) {
+        .main { grid-template-columns: 1fr; }
+        .card-stack { padding: 0 30px 30px; }
+      }
+      @media (max-width: 600px) {
+        body { padding: 18px 12px; }
+        .topbar { padding: 16px 18px; }
+        .content, .card-stack { padding-left: 16px; padding-right: 16px; }
+        .topbar nav { display: none; }
+      }
     </style>
-</head>
-<body class="gradient-bg min-h-screen text-slate-100 font-sans flex flex-col justify-between">
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo">✦</div>
+          <span>LifeManager</span>
+        </div>
+        <nav aria-label="Main navigation">
+          <span>Dashboard</span>
+          <span>Habits</span>
+          <span>Goals</span>
+          <span>Calendar</span>
+          <span class="nav-pill">Inbox</span>
+          <span class="nav-pill primary">Add task</span>
+        </nav>
+      </header>
 
-    <!-- Header Section -->
-    <header class="p-6 text-center border-b border-slate-800 flex justify-between items-center px-8">
-        <div class="flex items-center space-x-3">
-            <div class="p-2 bg-indigo-600 rounded-lg">
-                <i data-lucide="sparkles" class="w-6 h-6 text-white"></i>
+      <div class="main">
+        <main class="content">
+          <section class="hero">
+            <h1>Turn your goals into daily wins.</h1>
+            <p>
+              Keep every habit, task, and plan in one calm workspace so you can focus on what matters most
+              and build momentum one day at a time.
+            </p>
+            <div class="cta-row">
+              <a class="button primary" href="#">Get started</a>
+              <a class="button" href="#">View planner</a>
             </div>
-            <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
-                AI Life Manager
-            </h1>
-        </div>
+            <div class="meta-row">
+              <div class="stat">
+                <strong>84%</strong>
+                <span>Weekly focus</span>
+              </div>
+              <div class="stat">
+                <strong>12</strong>
+                <span>Open goals</span>
+              </div>
+              <div class="stat">
+                <strong>6.4h</strong>
+                <span>Productive time</span>
+              </div>
+            </div>
+          </section>
+        </main>
 
-        <!-- Auth Actions (Shows Profile when logged in) -->
-        <div id="user-section" class="hidden flex items-center space-x-4">
-            <img id="user-photo" src="" alt="User Photo" class="w-10 h-10 rounded-full border-2 border-indigo-500">
-            <span id="user-name" class="font-medium text-slate-300"></span>
-            <button id="btn-logout" class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-4 py-2 rounded-lg text-sm transition-all flex items-center space-x-2">
-                <i data-lucide="log-out" class="w-4 h-4"></i>
-                <span>Logout</span>
-            </button>
-        </div>
-    </header>
-
-    <!-- Main Content Area -->
-    <main class="flex-grow flex items-center justify-center p-6">
-        
-        <!-- Login Card (Visible when logged out) -->
-        <div id="login-card" class="glass-card max-w-md w-full p-8 rounded-2xl shadow-2xl text-center space-y-6">
-            <div class="space-y-2">
-                <h2 class="text-3xl font-extrabold tracking-tight text-white">Welcome!</h2>
-                <p class="text-slate-400 text-sm">Manage your routines, goals, and daily life with AI.</p>
+        <aside class="card-stack">
+          <div class="card calendar">
+            <div class="calendar-header">
+              <span>July 2026</span>
+              <div class="month-nav">
+                <span>‹</span>
+                <span>›</span>
+              </div>
             </div>
 
-            <button id="btn-login" class="w-full bg-white hover:bg-slate-100 text-slate-900 font-semibold py-3 px-6 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center justify-center space-x-3 border border-slate-200">
-                <svg class="w-5 h-5" viewBox="0 0 24 24">
-                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-                </svg>
-                <span>Sign in with Google</span>
-            </button>
-        </div>
-
-        <!-- Dashboard View (Visible when logged in) -->
-        <div id="dashboard-card" class="hidden glass-card max-w-2xl w-full p-8 rounded-2xl shadow-2xl space-y-6">
-            <h2 class="text-2xl font-bold text-slate-100 flex items-center space-x-2">
-                <i data-lucide="layout-dashboard" class="w-6 h-6 text-indigo-400"></i>
-                <span>Dashboard</span>
-            </h2>
-            <p class="text-slate-300">You have successfully logged in with Google!</p>
-            <div class="p-4 bg-indigo-950/50 rounded-xl border border-indigo-800/50 text-indigo-200">
-                🚀 Your AI Life Manager is setup! Features are ready to be built.
+            <div class="days">
+              <div>Su</div>
+              <div>Mo</div>
+              <div>Tu</div>
+              <div>We</div>
+              <div>Th</div>
+              <div>Fr</div>
+              <div>Sa</div>
             </div>
-        </div>
 
-    </main>
+            <div class="dates">
+              <div class="date muted">29</div>
+              <div class="date muted">30</div>
+              <div class="date muted">1</div>
+              <div class="date">2</div>
+              <div class="date">3</div>
+              <div class="date">4</div>
+              <div class="date">5</div>
 
-    <!-- Footer -->
-    <footer class="p-4 text-center text-slate-500 text-xs border-t border-slate-800">
-        &copy; 2026 AI Life Manager. All rights reserved.
-    </footer>
+              <div class="date">6</div>
+              <div class="date">7</div>
+              <div class="date">8</div>
+              <div class="date">9</div>
+              <div class="date today">10</div>
+              <div class="date task">11</div>
+              <div class="date">12</div>
 
-    <!-- Firebase Script Section -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { 
-            getAuth, 
-            signInWithPopup, 
-            GoogleAuthProvider, 
-            signOut, 
-            onAuthStateChanged 
-        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+              <div class="date">13</div>
+              <div class="date">14</div>
+              <div class="date">15</div>
+              <div class="date">16</div>
+              <div class="date">17</div>
+              <div class="date">18</div>
+              <div class="date task">19</div>
 
-        // Verified Firebase Config
-        const firebaseConfig = {
-            apiKey: "AIzaSyDe_OU6xzh6ut_dBPvvlrVr5C",
-            authDomain: "life-manager-app-471d8.firebaseapp.com",
-            projectId: "life-manager-app-471d8",
-            storageBucket: "life-manager-app-471d8.firebasestorage.app",
-            messagingSenderId: "64873524692",
-            appId: "1:64873524692:web:b369064b0fb8ed41953a41"
-        };
+              <div class="date">20</div>
+              <div class="date">21</div>
+              <div class="date">22</div>
+              <div class="date task">23</div>
+              <div class="date">24</div>
+              <div class="date">25</div>
+              <div class="date">26</div>
+            </div>
+          </div>
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
+          <div class="card to-do">
+            <div class="head">
+              <strong>Today's plan</strong>
+              <span class="pill">3 tasks</span>
+            </div>
+            <div class="task-list">
+              <div class="task">
+                <div class="task-main">
+                  <div class="check done"></div>
+                  <div>
+                    <div class="text">Morning workout</div>
+                    <div class="time">7:30 AM</div>
+                  </div>
+                </div>
+                <span class="tag">Health</span>
+              </div>
 
-        // UI Elements
-        const loginCard = document.getElementById('login-card');
-        const dashboardCard = document.getElementById('dashboard-card');
-        const loginBtn = document.getElementById('btn-login');
-        const logoutBtn = document.getElementById('btn-logout');
-        const userSection = document.getElementById('user-section');
-        const userName = document.getElementById('user-name');
-        const userPhoto = document.getElementById('user-photo');
+              <div class="task done">
+                <div class="task-main">
+                  <div class="check done"></div>
+                  <div>
+                    <div class="text">Review quarterly goals</div>
+                    <div class="time">9:00 AM</div>
+                  </div>
+                </div>
+                <span class="tag">Focus</span>
+              </div>
 
-        // Handle Sign In with Popup
-        loginBtn.addEventListener('click', async () => {
-            try {
-                await signInWithPopup(auth, provider);
-            } catch (error) {
-                console.error("Login error:", error);
-                alert("Login failed: " + error.message);
-            }
-        });
-
-        // Handle Sign Out
-        logoutBtn.addEventListener('click', async () => {
-            try {
-                await signOut(auth);
-            } catch (error) {
-                console.error("Logout error:", error);
-            }
-        });
-
-        // Auth State Observer
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // User is signed in
-                loginCard.classList.add('hidden');
-                dashboardCard.classList.remove('hidden');
-                userSection.classList.remove('hidden');
-
-                userName.textContent = user.displayName || user.email;
-                userPhoto.src = user.photoURL || 'https://via.placeholder.com/40';
-            } else {
-                // User is signed out
-                loginCard.classList.remove('hidden');
-                dashboardCard.classList.add('hidden');
-                userSection.classList.add('hidden');
-            }
-        });
-
-        // Initialize Lucide Icons
-        lucide.createIcons();
-    </script>
-</body>
+              <div class="task">
+                <div class="task-main">
+                  <div class="check"></div>
+                  <div>
+                    <div class="text">Finish landing page copy</div>
+                    <div class="time">1:30 PM</div>
+                  </div>
+                </div>
+                <span class="tag">Work</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </body>
 </html>
