@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
     <title>AI Life Manager</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -49,8 +50,8 @@
         <!-- Login Card (Visible when logged out) -->
         <div id="login-card" class="glass-card max-w-md w-full p-8 rounded-2xl shadow-2xl text-center space-y-6">
             <div class="space-y-2">
-                <h2 class="text-3xl font-extrabold tracking-tight text-white">স্বাগতম!</h2>
-                <p class="text-slate-400 text-sm">আপনার জীবনের দৈনন্দিন টাস্ক ও পরিকল্পনা AI দিয়ে ম্যানেজ করুন সহজেই।</p>
+                <h2 class="text-3xl font-extrabold tracking-tight text-white">Welcome!</h2>
+                <p class="text-slate-400 text-sm">Manage your routines, goals, and daily life with AI.</p>
             </div>
 
             <button id="btn-login" class="w-full bg-white hover:bg-slate-100 text-slate-900 font-semibold py-3 px-6 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center justify-center space-x-3 border border-slate-200">
@@ -68,11 +69,11 @@
         <div id="dashboard-card" class="hidden glass-card max-w-2xl w-full p-8 rounded-2xl shadow-2xl space-y-6">
             <h2 class="text-2xl font-bold text-slate-100 flex items-center space-x-2">
                 <i data-lucide="layout-dashboard" class="w-6 h-6 text-indigo-400"></i>
-                <span>ড্যাশবোর্ড</span>
+                <span>Dashboard</span>
             </h2>
-            <p class="text-slate-300">আপনি সফলভাবে গুগল অ্যাকাউন্ট দিয়ে সাইন-ইন করেছেন!</p>
+            <p class="text-slate-300">You have successfully logged in with Google!</p>
             <div class="p-4 bg-indigo-950/50 rounded-xl border border-indigo-800/50 text-indigo-200">
-                🚀 আপনার AI Life Manager অ্যাপ তৈরি হচ্ছে... পরবর্তী ফিচারগুলো খুব শীঘ্রই যোগ করা হবে!
+                🚀 Your AI Life Manager is setup! Features are ready to be built.
             </div>
         </div>
 
@@ -88,7 +89,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
             getAuth, 
-            signInWithRedirect, 
+            signInWithPopup, 
             GoogleAuthProvider, 
             signOut, 
             onAuthStateChanged 
@@ -96,13 +97,12 @@
 
         // Verified Firebase Config
         const firebaseConfig = {
-          apiKey: "AIzaSyDe_OU6xzh6ut_dBPvvlrVr5CMeNaywrCc",
-          authDomain: "life-manager-app-471d8.firebaseapp.com",
-          projectId: "life-manager-app-471d8",
-          storageBucket: "life-manager-app-471d8.firebasestorage.app",
-          messagingSenderId: "64873524692",
-          appId: "1:64873524692:web:b369064b0fb8ed41953a41",
-          measurementId: "G-19HD2EPHRB"
+            apiKey: "AIzaSyDe_OU6xzh6ut_dBPvvlrVr5C",
+            authDomain: "life-manager-app-471d8.firebaseapp.com",
+            projectId: "life-manager-app-471d8",
+            storageBucket: "life-manager-app-471d8.firebasestorage.app",
+            messagingSenderId: "64873524692",
+            appId: "1:64873524692:web:b369064b0fb8ed41953a41"
         };
 
         // Initialize Firebase
@@ -119,10 +119,10 @@
         const userName = document.getElementById('user-name');
         const userPhoto = document.getElementById('user-photo');
 
-        // Handle Sign In with Redirect
+        // Handle Sign In with Popup
         loginBtn.addEventListener('click', async () => {
             try {
-                await signInWithRedirect(auth, provider);
+                await signInWithPopup(auth, provider);
             } catch (error) {
                 console.error("Login error:", error);
                 alert("Login failed: " + error.message);
