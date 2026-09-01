@@ -16,15 +16,15 @@
       background-color: #f8fafc;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start; /* ওপরে সুন্দর করে ফিট হয়ে থাকার জন্য */
       min-height: 100vh;
-      padding: 16px;
+      padding: 40px 16px;
     }
 
     .task-card {
       background: #ffffff;
       width: 100%;
-      max-width: 400px;
+      max-width: 420px;
       padding: 24px;
       border-radius: 20px;
       box-shadow: 0 10px 25px rgba(108, 71, 255, 0.05);
@@ -177,7 +177,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      max-height: 280px;
+      max-height: 320px;
       overflow-y: auto;
     }
 
@@ -270,7 +270,7 @@
 <body>
 
   <div class="task-card">
-    <!-- Auth Section -->
+    <!-- Authentication Section -->
     <div class="auth-section">
       <button id="loginBtn" class="login-btn">
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt="Google">
@@ -286,7 +286,7 @@
       </div>
     </div>
 
-    <!-- Task Section -->
+    <!-- Daily Tasks Section -->
     <div class="header-section">
       <div class="header-title">Daily Tasks</div>
       <div class="task-counter" id="taskCounter">0 Done</div>
@@ -300,12 +300,11 @@
     <ul class="task-list" id="taskList"></ul>
   </div>
 
-  <!-- Firebase Scripts -->
+  <!-- Firebase JavaScript Module -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-    // আপনার দেওয়া Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyDe_OU6xzh6ut_dBPvvlrVr5CMeNaywrCc",
       authDomain: "life-manager-app-471d8.firebaseapp.com",
@@ -316,12 +315,10 @@
       measurementId: "G-19HD2EPHRB"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    // DOM Elements
     const loginBtn = document.getElementById('loginBtn');
     const logoutBtn = document.getElementById('logoutBtn');
     const userProfile = document.getElementById('userProfile');
@@ -334,7 +331,6 @@
 
     let currentUser = null;
 
-    // Monitor Auth State
     onAuthStateChanged(auth, (user) => {
       if (user) {
         currentUser = user;
@@ -352,20 +348,17 @@
       }
     });
 
-    // Login Event
     loginBtn.addEventListener('click', async () => {
       try {
         await signInWithPopup(auth, provider);
       } catch (error) {
         console.error("Login Error:", error);
-        alert("লগইন করতে সমস্যা হয়েছে। দয়া করে নিশ্চিত করুন Firebase Authorized Domains-এ আপনার Netlify লিংক যুক্ত করা আছে।");
+        alert("লগইন করতে সমস্যা হয়েছে। Firebase Authorized Domains-এ 'life-manager-pw.netlify.app' যোগ করা আছে কিনা নিশ্চিত করুন অথবা Brave Shield বন্ধ করুন।");
       }
     });
 
-    // Logout Event
     logoutBtn.addEventListener('click', () => signOut(auth));
 
-    // Task Functions
     addBtn.addEventListener('click', addTask);
     taskInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addTask(); });
 
